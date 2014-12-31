@@ -1,0 +1,48 @@
+Simple (Yet Efficient) Encryption Tools
+Written by Richard Walmsley <richwalm@gmail.com>
+WWW: http://walmsley.gen.nz/
+
+Description
+-----------
+
+Contains three simple tools dealing with encryption. Original written to help
+me learn Windows' CryptoAPI. They're console based utilities. They would make
+good reference code.
+
+Please note that no hashing is done to ensure that the files are free from
+errors.
+
+Tools
+-----
+
+* srsakeygen.exe
+
+Generates RSA 2048-bit public and private keys. It'll create 'private.key' &
+'public.key' inside the working directory. These files are in the Windows key
+BLOB format.
+
+* sencrypt.exe
+
+Uses AES 256-bit to encrypt passed files using a public key to encrypt the session
+key. It'll use 'public.key' in the same location as the executable.
+Files that it encrypts will have the extension '.enc' appended and it'll
+remove the original file if possible.
+
+* sdecrypt.exe
+
+The opposite of the above.
+
+Usage
+-----
+
+srsakeygen.exe takes no arguments.
+
+The others two simply take a list of files that are to be processed. Wildcards
+are supported. They'll skip files that appear to be already proccessed by
+looking at the extension. From Windows Explorer, files can also be simply
+dropped onto the executable.
+
+License
+-------
+
+Distributed under the MIT License. See the included LICENSE for details.
