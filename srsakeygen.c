@@ -71,21 +71,25 @@ static INT ExportKey(INT KeyType, CONST WCHAR *Filename)
 		return 0;
 
 	if (!CryptExportKey(KeyHandle, 0, KeyType, 0, Key, &KeySize)) {
+		SecureZeroMemory(Key, KeySize);
 		HeapFree(HeapHandle, 0, Key);
 		return 0;
 	}
 
 	File = CreateFileW(Filename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (File == INVALID_HANDLE_VALUE) {
+		SecureZeroMemory(Key, KeySize);
 		HeapFree(HeapHandle, 0, Key);
 		return 0;
 	}
 
 	if (!WriteFile(File, Key, KeySize, &BytesWritten, NULL)) {
+		SecureZeroMemory(Key, KeySize);
 		HeapFree(HeapHandle, 0, Key);
 		return 0;
 	}
 
+	SecureZeroMemory(Key, KeySize);
 	HeapFree(HeapHandle, 0, Key);
 	CloseHandle(File);
 	return 1;
